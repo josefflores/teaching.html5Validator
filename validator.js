@@ -30,7 +30,7 @@ window.onload = function(){
     ['head', 'body'].forEach(function(tag, i, arr){
         tagPresentLog(hasTag(tag), tag, 'The element is present *');
     });
-
+    tagPresentLog((document.title ? true: false),'title', (document.title ));
     [
         {
             elem: 'html',
