@@ -22,6 +22,28 @@ function tagPresentLog(test, tag, msg){
     console.log(tag, ':', msg, '-', test);
 }
 
+function validate(){
+    var url = "https://validator.w3.org/nu/?doc=";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200){
+
+            var el = document.createElement( 'tmp' );
+            el.innerHTML = this.responseText;
+            arr = el.getElementsByTagName( 'p' );
+            val = false;
+
+            for(i=0; i< arr.length;++i)
+                if (arr[i].className === 'success')
+                    val = true;
+
+            console.log("w3 validation", '-',val);
+        }
+    };
+    xhttp.open("GET", url+encodeURIComponent(document.URL), true);
+    xhttp.send();
+}
+
 // HTML5 requirements
 window.onload = function(){
     console.log('UML HTML5 TEST VALIDATOR');
@@ -46,13 +68,6 @@ window.onload = function(){
         console.log(test.elem, '[', test.prop,']','-', ret);
     });
 
-    var url = "https://validator.w3.org/nu/?doc=";
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200)
-            console.log("validated", '-', this.responseText.indexOf("Document checking completed. No errors or warnings to show.") > 1);
-    };
-    xhttp.open("GET", url+encodeURIComponent(document.URL), true);
-    xhttp.send();
+    validate();
 };
 
